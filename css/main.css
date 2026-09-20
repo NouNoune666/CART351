@@ -1,0 +1,1276 @@
+
+h2{
+  text-align: center;
+}
+h3{
+  text-align: center;
+}
+
+/*===CUSTOM FONTS===*/
+
+/*General website fonts*/
+@font-face {
+    font-family: nintendoFont;
+    /* set name */
+    src: url(assets/fonts/Nintendo-DS-BIOS.ttf);
+    /* url of the font */
+}
+
+@font-face {
+    font-family: yosterFont;
+    /* set name */
+    src: url(assets/fonts/yoster.ttf);
+    /* url of the font */
+}
+
+@font-face {
+    font-family: jgsFont;
+    /* set name */
+    src: url(assets/fonts/jgs.ttf);
+    /* url of the font */
+}
+
+@font-face {
+    font-family: glamourGirlFont;
+    /* set name */
+    src: url(assets/fonts/glamourGirl.ttf);
+    /* url of the font */
+}
+
+@font-face {
+    font-family: startStoryFont;
+    /* set name */
+    src: url(assets/fonts/startStory.otf);
+    /* url of the font */
+}
+
+@font-face {
+    font-family: chiringuitoEspacialFont;
+    /* set name */
+    src: url(assets/fonts/chiringuitoEspacial.ttf);
+    /* url of the font */
+}
+
+
+
+/* This affects everything on the page and resets all default spacing to zero so that we start from scratch, unless I override it */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+/*==== GLOBAL WRAPPER, ALL PAGES, TEXTS AND ====*/
+#wrapper {
+    max-width: 1500px;
+    /* how wide content can stretch */
+    margin: 0 auto;
+    /* centers the wrapper */
+    border: 10px solid #D55E0F;
+    border-radius: 20px;
+    background: #0687e48e;
+}
+
+
+/*==Navigation==*/
+nav {
+    display: flex;
+    /*makes it horizontal*/
+    justify-content: center;
+    align-items: center;
+    gap: 25px;
+    flex-wrap: wrap;
+    /*for smaller screens*/
+    background: #0687e48e;
+    padding: 10px;
+    border: 10px solid #D55E0F;
+    border-radius: 20px;
+    margin: 30px;
+    /* font-family: "Zalando Sans Expanded", sans-serif;*/
+    transition: border-color 0.6s, background-color 0.6s ease, transform 0.6s ease;
+}
+
+nav:hover {
+    border-color: #fbbb0ddb;
+    background-color: #75AE2A;
+    transform: scale(1.1);
+    font-family: 'Nintendo', sans-serif;
+}
+
+/*nav and dropdown title, avoids repeating twice*/
+nav a,
+.dropdown-title {
+    font-family: nintendoFont;
+    font-size: 30px;
+    color: #000000;
+    text-decoration: wavy underline;
+    display: inline-block;
+    margin: 6px 0;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: color 0.6s ease, border-color 0.6s, transform 0.6s ease;
+}
+
+/* Hover for nav links and dropdown */
+nav a:hover,
+.dropdown-title:hover {
+    color: #D55E0F;
+    border-color: #fbbb0ddb;
+    background-color: #75AE2A;
+    transform: rotate(-5deg) scale(1.1);
+    text-decoration: underline dotted #D55E0F;
+    font-family: 'yosterFont', sans-serif;
+    font-size: 20px;
+}
+
+/*Dropdown .dropdown-content will be positioned relative to this parent,
+not the page. */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    padding: 5px;
+    display: none;
+    top: 100%;
+    /*This is to make sure it opens below title*/
+    position: absolute;
+    background: #0687e4;
+    border: 1px solid #D55E0F;
+    border-radius: 20px;
+    z-index: 100;
+    /* make sure it layers above other stuff, not really needed right now */
+
+}
+
+.dropdown-content a:hover {
+    color: #D55E0F;
+    text-decoration: underline dotted #D55E0F;
+    font-family: 'yosterFont', sans-serif;
+}
+
+/*Dropdown hover*/
+.dropdown:hover .dropdown-content {
+    display: block;
+
+}
+
+
+
+
+/*==== SIDE BY SIDE LAYOUT (TEXT + IMAGE) ====*/
+.content-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-around;
+    margin: 40px 30px;
+}
+
+.content-section .text {
+    flex: 1;
+    font-family: "startStoryFont", sans-serif;
+    font-size: 22px;
+    background: #0E8DE5;
+    border: 10px solid #D66317;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    text-align: justify;
+}
+
+.content-section .text:hover {
+    border-color: #fbbb0ddb;
+    background-color: #75AE2A;
+    transform: scale(1.1);
+}
+
+.content-section .image {
+    flex: 1;
+    text-align: center;
+}
+
+.content-section .image img {
+    width: 90%;
+    max-width: 600px;
+    border: 8px solid #D66317;
+    border-radius: 20px;
+    transition: transform 0.6s ease;
+    background: #0E8DE5;
+}
+
+.content-section .image img:hover {
+    transform: scale(1.1);
+    border-color: #fbbb0ddb;
+    background-color: #75AE2A;
+}
+
+
+
+
+
+
+
+/*====ABOUT PAGE====*/
+#about-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#about-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#about-page header:hover {
+    transform: scale(1.1);
+}
+
+#about-page header h1 {
+    font-family: "Zalando Sans Expanded", sans-serif;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#about-page header h2 {
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #86efac;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: "jgsFont", sans-serif;
+
+}
+
+#about-page header img {
+    max-width: 600px;
+    width: 100%;
+    border: 10px solid #86efac;
+    border-radius: 20px;
+}
+
+/*==Main article==*/
+#about-page main article {
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: 1.3s;
+}
+
+
+
+
+
+
+
+/*====WHAT IS A DATA BREACH====*/
+
+#what-is-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#what-is-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#what-is-page header:hover {
+    transform: scale(1.1);
+}
+
+#what-is-page header h1 {
+    font-family: "Zalando Sans Expanded", sans-serif;
+    line-height: 1;
+    text-align: left;
+    font-size: 8rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#what-is-page header h2 {
+    font-family: "jgsFont", sans-serif;
+    line-height: 1;
+    text-align: left;
+    font-size: 8rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#what-is-page header img {
+    max-width: 600px;
+    width: 100%;
+    border: 10px solid #86efac;
+    border-radius: 20px;
+}
+
+/*==Main text==*/
+#what-is-page main .text {
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    /* font-family: "Zalando Sans Expanded", sans-serif; */
+}
+
+
+
+
+
+
+
+
+/*====HOW TO PROTECT YOURSELF PAGE====*/
+
+#how-to-protect-yourself-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#how-to-protect-yourself-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#how-to-protect-yourself-page header:hover {
+    transform: scale(1.1);
+}
+
+#how-to-protect-yourself-page header h1 {
+    font-family: "Zalando Sans Expanded", sans-serif;
+    line-height: 1;
+    text-align: left;
+    font-size: 7rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#how-to-protect-yourself-page header h2 {
+    font-family: "jgsFont", sans-serif;
+    line-height: 1;
+    text-align: right;
+    font-size: 5rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#how-to-protect-yourself-page header img {
+    max-width: 600px;
+    width: 100%;
+    border: 10px solid #86efac;
+    border-radius: 20px;
+}
+
+/*==Main article==*/
+#how-to-protect-yourself-page main article {
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    /* font-family: "Zalando Sans Expanded", sans-serif; */
+}
+
+
+
+
+
+
+
+
+/*====WHO AM I====*/
+#who-am-i-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#who-am-i-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#who-am-i-page header:hover {
+    transform: scale(1.1);
+}
+
+#who-am-i-page h1 {
+    font-family: "Zalando Sans Expanded", sans-serif;
+    line-height: 0.7;
+    text-align: center;
+    font-size: 10rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#who-am-i-page h2 {
+    font-family: "jgsFont", sans-serif;
+    line-height: 0.7;
+    text-align: center;
+    font-size: 10rem;
+    color: #86efac;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#who-am-i-page header img {
+    max-width: 600px;
+    width: 100%;
+    border: 10px solid #86efac;
+    border-radius: 20px;
+}
+
+/*==Main text==*/
+#who-am-i-page main .text {
+    padding: 10px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    /* font-family: "Zalando Sans Expanded", sans-serif; */
+    transition: 1.3s;
+    /*whats this*/
+}
+
+
+
+
+
+/*====YAHOO PAGE====*/
+#yahoo-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#yahoo-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#yahoo-page header:hover {
+    transform: scale(1.1);
+}
+
+
+#yahoo-page header h1 {
+    font-family: "yahooFont", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #6000D3 !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#yahoo-page header h2 {
+    font-family: "yahooFont", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #6000D3;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: "jgsFont", sans-serif;
+
+}
+
+#yahoo-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#yahoo-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db !important;
+    background-color: #6000D3;
+}
+
+#yahoo-page .content-section .text {
+    font-family: "yahooFont", sans-serif !important;
+    border-color: #000000db;
+}
+
+#yahoo-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db !important;
+    background-color: #6000D3;
+}
+
+
+#yahoo-page .textBottom {
+    font-family: "yahooFont", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#yahoo-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #6000D3;
+}
+
+#yahoo-page #wrapper {
+    background: #f4f3f0;
+}
+
+
+
+
+
+
+
+/*====EQUIFAX PAGE====*/
+#equifax-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#equifax-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#equifax-page header:hover {
+    transform: scale(1.1);
+}
+
+#equifax-page header h1 {
+    font-family: "equifaxFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #B4203F !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#equifax-page header h2 {
+    font-family: "equifaxFont2", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #B4203F;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+    font-family: "jgsFont", sans-serif;
+
+}
+
+#equifax-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#equifax-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #B4203F;
+}
+
+#equifax-page .content-section .text {
+    font-family: "equifaxFont2", sans-serif !important;
+    border-color: #000000db;
+}
+
+#equifax-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #B4203F;
+}
+
+
+#equifax-page .textBottom {
+    font-family: "equifaxFont2", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#equifax-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #B4203F;
+}
+
+#equifax-page #wrapper {
+    background: #333e48;
+}
+
+
+
+
+
+
+
+
+/*====FACEBOOK PAGE====*/
+#facebook-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#facebook-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#facebook-page header:hover {
+    transform: scale(1.1);
+}
+
+#facebook-page header h1 {
+    font-family: "facebookFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #1877F2 !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#facebook-page header h2 {
+    font-family: "facebookFont2", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #1877F2;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+#facebook-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#facebook-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #1877F2;
+}
+
+#facebook-page .content-section .text {
+    font-family: "facebookFont2", sans-serif !important;
+    border-color: #000000db;
+}
+
+#facebook-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #1877F2;
+}
+
+
+#facebook-page .textBottom {
+    font-family: "facebookFont2", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#facebook-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #1877F2;
+}
+
+#facebook-page #wrapper {
+    background: #8b9dc3;
+}
+
+
+
+
+
+
+
+/*====LINKEDIN PAGE====*/
+#linkedIn-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#linkedIn-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#linkedIn-page header:hover {
+    transform: scale(1.1);
+}
+
+#linkedIn-page header h1 {
+    font-family: "linkedInFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #0077B5 !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#linkedIn-page header h2 {
+    font-family: "linkedInFont2", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #0077B5;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+#linkedIn-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#linkedIn-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #0077B5;
+}
+
+#linkedIn-page .content-section .text {
+    font-family: "linkedInFont3", sans-serif !important;
+    border-color: #000000db;
+}
+
+#linkedIn-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #0077B5;
+}
+
+
+#linkedIn-page .textBottom {
+    font-family: "linkedInFont3", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#linkedIn-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #0077B5;
+}
+
+#linkedIn-page #wrapper {
+    background: #ffffff;
+}
+
+
+
+
+
+
+
+
+/*====DESJARDINS PAGE====*/
+#desjardins-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#desjardins-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#desjardins-page header:hover {
+    transform: scale(1.1);
+}
+
+#desjardins-page header h1 {
+    font-family: "desjardinsFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #00874E !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#desjardins-page header h2 {
+    font-family: "desjardinsFont2", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #00874E;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+#desjardins-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#desjardins-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #00874E;
+}
+
+#desjardins-page .content-section .text {
+    font-family: "desjardinsFont3", sans-serif !important;
+    border-color: #000000db;
+}
+
+#desjardins-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #00874E;
+}
+
+
+#desjardins-page .textBottom {
+    font-family: "desjardinsFont3", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#desjardins-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #00874E;
+}
+
+#desjardins-page #wrapper {
+    background: #E6E7E8;
+}
+
+
+
+
+
+
+
+
+
+/*====CAPITAL ONE PAGE====*/
+#capitalOne-page {
+    color: #000000;
+    line-height: 2;
+    padding: 20px;
+    background: url("assets/background.png");
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+/*==Header==*/
+#capitalOne-page header {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+    transition: transform 0.6s ease;
+}
+
+#capitalOne-page header:hover {
+    transform: scale(1.1);
+}
+
+#capitalOne-page header h1 {
+    font-family: "capitalOneFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: left;
+    font-size: 10rem;
+    color: #CC2427 !important;
+    text-shadow: 10px 20px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#capitalOne-page header h2 {
+    font-family: "capitalOneFont1", sans-serif !important;
+    line-height: 0.7;
+    text-align: right;
+    font-size: 5rem;
+    color: #CC2427;
+    text-shadow: 10px 15px #000000;
+    /* offset-x | offset-y | blur-radius | color */
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+#capitalOne-page .content-section .image img {
+    border-color: #000000db;
+}
+
+#capitalOne-page .content-section .image img:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #CC2427;
+}
+
+#capitalOne-page .content-section .text {
+    font-family: "capitalFont2", sans-serif !important;
+    border-color: #000000db;
+}
+
+#capitalOne-page .content-section .text:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #CC2427;
+}
+
+
+#capitalOne-page .textBottom {
+    font-family: "capitalFont2", sans-serif !important;
+    text-align: center;
+    margin: 40px 30px;
+    border: 10px solid #000000;
+    border-radius: 20px;
+    padding: 20px;
+    transition: border-color 0.6s ease, background-color 0.6s ease, transform 0.6s ease;
+    background: #0E8DE5;
+    font-size: 20px;
+
+}
+
+#capitalOne-page .textBottom:hover {
+    transform: scale(1.05);
+    border-color: #000000db;
+    background-color: #CC2427;
+}
+
+#capitalOne-page #wrapper {
+    background: #013D5B;
+}
+
+
+
+
+
+
+
+
+
+/*Image gallery of baby Brigi*/
+
+#gallery {
+    margin: 50px auto;
+    text-align: center;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+#gallery h3 {
+    font-size: 2rem;
+    font-family: "chiringuitoEspacialFont", sans-serif;
+    color: #86efac;
+    text-shadow: 3px 3px #000;
+    margin-bottom: 30px;
+    transition: transform 0.6s ease;
+}
+
+#gallery h3:hover {
+    transform: scale(1.5);
+}
+
+/* Two rows of images */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    justify-items: center;
+}
+
+.gallery-grid figure {
+    background: #0689E4;
+    border: 8px solid #71AB23;
+    border-radius: 20px;
+    padding: 10px;
+    transition: transform 0.6s ease, background-color 0.6s ease, border-color 0.6s ease;
+}
+
+.gallery-grid figure:hover {
+    transform: scale(1.5);
+    border-color: #fbbb0ddb;
+    background-color: #D55E0F;
+}
+
+
+/* Each image */
+.gallery-grid img {
+    width: 100%;
+    max-width: 300px;
+    height: 370px;
+    object-fit: cover;
+}
+
+.gallery-grid figcaption {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #000;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 5px 8px;
+    font-style: italic;
+    font-family: "startStoryFont", sans-serif;
+}
+
+
+
+
+
+/*==EXAMPLES GRID==*/
+#examples {
+    text-align: center;
+    background: #0689E4;
+    padding: 10px;
+    border: 10px solid #D55E0F;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+#examples:hover {
+    border-color: #FBB905;
+    transition: 1.6s;
+    background-color: #71AB23;
+}
+
+#examples h2 {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    background: #4ae0d8;
+    padding: 10px;
+    border: 8px solid #D55E0F;
+    border-radius: 20px;
+    font-family: "chiringuitoEspacialFont", sans-serif;
+}
+
+#examples h2:hover {
+    border-color: #FBB905;
+    transition: 1.6s;
+    background-color: #71AB23;
+}
+
+
+/*The grid of examples*/
+.examples-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* two columns */
+    gap: 10px;
+    /* spacing between grid items */
+}
+
+/*Each example*/
+.example {
+    background: #0689E4;
+    border: 8px solid #D55E0F;
+    border-radius: 20px;
+    padding: 10px;
+    transition: 0.6s;
+    /*for smoother hovering*/
+    text-decoration: none;
+}
+
+.example:hover {
+    border-color: #FBB905;
+    transition: 1.6s;
+    background-color: #71AB23;
+    transform: scale(1.1);
+}
+
+.example img {
+    width: 90%;
+    height: 200px;
+    object-fit: contain;
+    border-radius: 6px;
+}
+
+/*Text under the images*/
+.example p {
+    margin-top: 10px;
+    font-family: Verdana, sans-serif;
+    border: 2px solid #D55E0F;
+    border-radius: 20px;
+    font-size: 1rem;
+    color: #000000;
+    font-family: "startStoryFont", sans-serif;
+}
+
+/*==Footer==*/
+footer {
+    margin-top: 50px;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 1.3rem;
+    color: #000000;
+}

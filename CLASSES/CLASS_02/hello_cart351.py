@@ -62,14 +62,14 @@
 
 # print(f"my name is {my_name} and my favorite cat is {my_fav_cat}")
 
-# my_name = input("Name: ")
-# my_fav_fruit = input("Fav Fruit: ")
-# my_fav_animal = input("Fav Animal: ")
-# my_fav_veg = input("Fav Veg: ")
-# my_fav_color = input("Fav Color: ")
+my_name = input("Name: ")
+my_fav_fruit = input("Fav Fruit: ")
+my_fav_animal = input("Fav Animal: ")
+my_fav_veg = input("Fav Veg: ")
+my_fav_color = input("Fav Color: ")
 
-# a_saved_fstring = f"Your fav fruit is {my_fav_fruit}"
+a_saved_fstring = f"Your fav fruit is {my_fav_fruit}"
 
-# print(f"Your name is {my_name}")
-# print(f"Your favorite color is {my_fav_color} and You also love {my_fav_animal}s")
-# print(a_saved_fstring)
+print(f"Your name is {my_name}")
+print(f"Your favorite color is {my_fav_color} and You also love {my_fav_animal}s")
+print(a_saved_fstring)

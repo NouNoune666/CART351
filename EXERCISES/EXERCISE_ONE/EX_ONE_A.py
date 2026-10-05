@@ -132,7 +132,7 @@
 # print("apple"[1]) # this also works
 # #------------------------------------------------------------------------
 
-# print("\n------")
+# print("\n------")s
 # print("Task 10: String slices")
 # print("Expected output: jump")
 

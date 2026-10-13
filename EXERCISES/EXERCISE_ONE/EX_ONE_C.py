@@ -19,6 +19,7 @@ def fetch_swapi_data():
 data = fetch_swapi_data() #returns a list
 #each item on the list is a dictionary
 
+
 # testing testing
 # print(len(data))
 # print(data[0]["name"])
@@ -28,12 +29,14 @@ if data:
     table.add_column("NAME", justify="left", style="#D0429B")
     table.add_column("DIAMETER", justify="left", style ="#3B719E")
     table.add_column("POPULATION", justify="left", style="#197373")
+    table.add_column("CLIMATE", justify="left", style = "i green")
 
     for planets in data[0:13]:
         name = (planets["name"])
         diameter = (planets["diameter"])
         population = (planets["population"])
+        climate = (planets["climate"])
        
-        table.add_row(name, diameter, population)
+        table.add_row(name, diameter, population, climate)
 
 console.print(table)

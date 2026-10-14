@@ -77,8 +77,23 @@
 		</div>
 
 		<div class="box">
-			<h4> WEEK x: </h4>
-			<p> À suivre...</p>
+			<h4> WEEK 4: October 26th </h4>
+			<p> Today at the sensor lab Sabine kindly went through the Flask II material with me. Here a small list of
+				what I took away from this:
+			<ul>
+				<li> The HTML pages must be under a templates folder</li>
+				<li> Logically, the HTML pages can be used as templates for othe pages by using "extend". This reduces
+					the amount of copy pasting one has to do.</li>
+				<li> We can use "{% block content %}" and "{% endblock %}" to insert content specific only to that page.
+				</li>
+				<li> Using "{{url_for}}" allows you to call the function inside the route instead of the route itself.
+					This allows one to change the customize the url without having to update that name everywhere else.
+				</li>
+				<li> ''app.logger.info(request.args)'' is very useful for forms and keeping information from the user.
+				</li>
+			</ul>
+			</p>
+			<p>That's pretty much it! Thanks Sabine :)</p>
 		</div>
 
 	</div>

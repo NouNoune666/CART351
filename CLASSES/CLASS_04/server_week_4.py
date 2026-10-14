@@ -30,5 +30,4 @@ def five():
     return render_template("pineapple_five.html", user_bool = userLoggedIn)
 
 
-
 app.run(debug=True)

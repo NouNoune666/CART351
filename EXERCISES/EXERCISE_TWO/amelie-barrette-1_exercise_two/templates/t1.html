@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="formContainer">
+    <form id="insertInfo" action="{{url_for('getSearchCriteria')}}">
+        <fieldset>
+            <p>
+                <label> NASA API search criteria: </label>
+                <input type="text" size="24" maxlength="40" value="search for..." name="search_criteria" required>
+            </p>
+
+            <p>
+                <input type="submit" value="submit" />
+            </p>
+        </fieldset>
+
+    </form>
+</div>
+
+{% if have_results %}
+<div class="textAndImage">
+    <div class="text_description">
+        <p>{{description}}</p>
+    </div>
+
+    <div class="img_description">
+        <img id=imgT1 src="{{imgPath}}" />
+    </div>
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

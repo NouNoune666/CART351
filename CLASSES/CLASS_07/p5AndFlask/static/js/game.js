@@ -15,8 +15,8 @@ let gameState = "start"; // state of the application
 
 //FOR LATER
 let label = `Type your Name and then Press ENTER: \n `;
-let nameToSave =""
-let oldScore =""
+let nameToSave = ""
+let oldScore = ""
 
 
 function setup() {
@@ -60,9 +60,22 @@ function draw() {
   //default
   background("#333333");
 
+  /*** gameState - after save name save the score */
+  if (gameState === "saveData") {
+    displayInfo(`Saving ${nameToSave}'s score of ${score}...`, width / 2, height / 2 + 20);
+    sendData({ id: nameToSave, score: score });
+  }
+
+
+  /*** gameState - save the name */
+  if (gameState === "saveName") {
+    displayInfo(label + nameToSave, width / 2, height / 2 + 20);
+  }
+
+
   /*** once received notification from server that data is saved we can end */
   if (gameState === "end") {
-   
+    console.log(nameToSave);
     displayInfo(`BYE!\n`, width / 2, height / 2 + 60);
   }
   /*** gameState is paused : user lost but can choose to quit or try again */
@@ -82,14 +95,14 @@ function draw() {
       //play again
       if (keyCode === 32) {
         gameState = "play";
-        score =0;
-        oldScore =""
+        score = 0;
+        oldScore = ""
         document.querySelector("#p5Score").innerHTML = `SCORE: ${score}`
         ball.reset();
       }
       //end
       if (keyCode === 81) {
-        gameState = "end";
+        gameState = "saveName";
       }
     }
   }
@@ -121,11 +134,11 @@ function draw() {
       }
     }
   }
-   /*** gameState - start */
+  /*** gameState - start */
   if (gameState === "start") {
     displayInfo("PRESS space bar to START", width / 2, height / 2);
-    if(keyIsPressed){
-      if (keyCode === 32){
+    if (keyIsPressed) {
+      if (keyCode === 32) {
         gameState = "play"
       }
     }
@@ -154,5 +167,40 @@ function keyPressed(e) {
   // console.log("key");
   console.log(e);
   keyCode = e.keyCode;
-  
+  // save user name
+  if (gameState === "saveName") {
+    //check if is lower /uppercase letter
+    if (
+      (e.keyCode >= 65 && e.keyCode <= 90) ||
+      (e.keyCode >= 97 && e.keyCode <= 122)
+    ) {
+      nameToSave += key;
+
+    }
+    //user finished
+    else if (e.keyCode === 13) {
+      gameState = "saveData"
+    }
+
+  }
+
+}
+
+
+
+/* function to send data to server */
+async function sendData(params) {
+  const queryParams = new URLSearchParams(params).toString();
+  console.log(queryParams);
+  //build the url -end point
+  const url = `/getDataFromP5?${queryParams}`;
+  try {
+    let res = await fetch(url);
+    let resJSON = await res.json();
+    console.log(resJSON);
+    gameState = 'end'
+
+  } catch (err) {
+    console.log(err);
+  }
 }

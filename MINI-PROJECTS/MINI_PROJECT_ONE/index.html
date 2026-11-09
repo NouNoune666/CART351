@@ -1,0 +1,21 @@
+<!-- will be a child of base-->
+{% extends "base.html" %}
+
+{% block scriptblock %}
+<script src="{{url_for('static',filename='js/script_post.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+
+<form id="sessionStore">
+    <p>
+        <label>Upload Image:</label>
+        <input type=" file" name='the_file' size=10 required />
+    </p>
+    <p>
+        <label></label>
+        <input id="submitPlant" type="submit" name="submit" value="submit my info" id=buttonS />
+    </p>
+</form>
+
+{% endblock %}

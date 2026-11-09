@@ -1,0 +1,19 @@
+{
+    "name": "mandy",
+    "fav_col": "blue",
+    "fav_city": [
+        "list",
+        3,
+        4,
+        true,
+        "abc",
+        "another element",
+        "another element",
+        "another element",
+        "another element",
+        "another element",
+        "another element",
+        "another element"
+    ],
+    "newKey": 1234
+}

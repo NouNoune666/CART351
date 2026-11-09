@@ -16,7 +16,7 @@ async function chargerDonneesCarte() {
     try {
         let response = await fetch('data/test.geojson');
         let testData = await response.json();
-        // console.log('works', testData)
+        console.log('works', testData)
         L.geoJson(testData, {
             pointToLayer: function (feature, latlng) {
                 // console.log('un lieu, un point:', feature.properties.Nom);

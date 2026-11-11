@@ -7,7 +7,7 @@
 
 {% block content %}
 
-<form id="sessionStore">
+<form id="sessionStore" method = "post" action = "{{url_for('thank_you_two')}}" enctype="multipart/form-data">
     <p>
         <label>Upload Image:</label>
         <input type="file" name='the_file' size=10 required />

@@ -21,6 +21,19 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app.route("/thank_form_two",methods = ['POST', 'GET'])
+def thank_you_two():
+    if request.method == 'POST':
+        #key is the same as in the form :)
+        uploadedfile = request.files['the_file']
+        #save file to uploads folder
+        uploadedfile.save(os.path.join(app.config['UPLOAD_FOLDER'], uploadedfile.filename))
+        app.logger.info(uploadedfile.filename)
+
+    return render_template("thankyou_form_rev.html", 
+                           imgPath = uploadedfile.filename)
+                        #    owner = request.form["o_name"]) 
+
 # # another route
 # @app.route('/p5BreakOut')
 # def runpP5():

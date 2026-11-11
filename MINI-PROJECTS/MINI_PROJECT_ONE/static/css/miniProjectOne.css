@@ -10,3 +10,16 @@ body {
     margin: 0;
     padding: 20px;
 }
+
+/*** img uploaded **/
+.thank-collect .imgContainer{
+   background-color: rgb(232, 178, 233);
+    width:50%;
+    margin-top:10px;
+    margin-left:25%;
+}
+.thank-collect .imgContainer img{
+    display:inline-block;
+    width:70%;
+    margin-left:15%;
+}

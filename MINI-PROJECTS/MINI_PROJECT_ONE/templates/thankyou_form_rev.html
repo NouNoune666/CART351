@@ -1,10 +1,10 @@
 <!-- will be a child of base-->
 {% extends "base.html" %}
 {% block content %}
-    <section class = "thank-collect">
-    <h3> Thank you <span class = "highlight">{{owner}}</span> for adding a new plant into the plant repo!</h3>
-    <div class = "imgContainer">
-             <img src = "{{url_for('static' , filename ='uploads/'+imgPath)}}"/>
+<section class="thank-collect">
+    <h3> Thank you <span class="highlight">{{owner}}</span> for adding a new plant into the plant repo!</h3>
+    <div class="imgContainer">
+        <img src="{{url_for('static' , filename ='uploads/'+imgPath)}}" />
     </div>
 </section>
 {% endblock %}

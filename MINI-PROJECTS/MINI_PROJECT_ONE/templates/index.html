@@ -2,20 +2,28 @@
 {% extends "base.html" %}
 
 {% block scriptblock %}
-<script src="{{url_for('static',filename='js/script_post.js')}}"></script>
+<script src="{{url_for('static',filename='js/script.js')}}"></script>
 {% endblock %}
 
 {% block content %}
 
-<form id="sessionStore" method = "post" action = "{{url_for('thank_you_two')}}" enctype="multipart/form-data">
+<form id="insertImageForm" method="post" enctype="multipart/form-data">
     <p>
-        <label>Upload Image:</label>
-        <input type="file" name='the_file' size=10 required />
+        <label for="uploadFile">Upload a cat:</label>
+        <input id="uploadFile" type="file" name='the_file' size=10 required id=buttons />
     </p>
     <p>
         <label></label>
-        <input id="submitPlant" type="submit" name="submit" value="submit my info" id=buttonS />
+        <input id="submitImage" type="submit" name="submit" value="submit this cat" id=buttons />
     </p>
+
+
 </form>
+
+<div id="results">
+    <h4>RESULTS</h4>
+    <div id="result-container">
+    </div>
+</div>
 
 {% endblock %}

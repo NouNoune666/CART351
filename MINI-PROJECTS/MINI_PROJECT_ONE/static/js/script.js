@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
+// import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { Sky } from 'three/addons/objects/Sky.js';
+
+ let mouse = {x:0, y:0}
 
 // --- Core Setup ---
 const scene = new THREE.Scene();
@@ -29,11 +32,25 @@ ground.rotateX(-1.57)
 
 // Houses
 const houseGeometry = new THREE.BoxGeometry( 100, 100, 100 );
-const houseMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const houseMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // here we can add { map: the picture uploaded } 
 const cube = new THREE.Mesh( houseGeometry, houseMaterial );
-scene.add( cube );
+const cube1 = new THREE.Mesh( houseGeometry, houseMaterial );
+const cube2 = new THREE.Mesh( houseGeometry, houseMaterial );
+scene.add( cube, cube1, cube2 );
 console.log(houseGeometry)
 cube.position.y = ground.position.y + 50
+cube1.position.y = ground.position.y + 50
+cube2.position.y = ground.position.y + 50
+cube1.position.x = 150
+cube2.position.x = 350
+
+
+// const axesHelper = new THREE.AxesHelper(1)
+// scene.add(axesHelper)
+
+
+const raycaster = new THREE.Raycaster()
+
 
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.position.set(0, 20, 300);
@@ -45,8 +62,8 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-let controls;
-controls = new PointerLockControls( camera, renderer.domElement );
+const controls = new PointerLockControls( camera, renderer.domElement );
+// const controls = new OrbitControls(camera, renderer.domElement)
 
 // FPS movement variables
 let moveForward = false;
@@ -178,8 +195,21 @@ function animate(timer) { // Main animation loop
     camera.position.x = THREE.MathUtils.clamp(camera.position.x, -1000, 1000); // Clamp X position
     camera.position.z = THREE.MathUtils.clamp(camera.position.z, -1000, 1000); // Clamp Z position
 
-
+    raycaster.setFromCamera(mouse, camera);
+    
     renderer.render(scene, camera);
+    const objectsToTest = [cube, cube1, cube2]
+    const intersects = raycaster.intersectObjects(objectsToTest)
+
+     for(const object of objectsToTest)
+    {
+        object.material.color.set('#ff0000')
+    }
+
+    for(const intersect of intersects)
+    {
+        intersect.object.material.color.set('#0000ff')
+    }
 }
 
 
@@ -191,6 +221,19 @@ window.addEventListener('resize', () => {
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight); // Resize renderer
 });
+
+// Handle click on start
+document.getElementById('start-btn').addEventListener('click', function () {
+                const overlay = document.getElementById('intro-overlay');
+                overlay.classList.add('hidden');
+                setTimeout(() => overlay.remove(), 700);
+            })
+
+window.addEventListener("mousemove", function(event) {
+  mouse.x = (event.clientX / window.innerWidth) * 2 - 1; //map to between -1,1
+  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; //map to between -1,1
+//   console.log(mouse);
+})
 
 window.onload = function () {
     console.log("js is up and running");

@@ -17,6 +17,32 @@
 
 {% block content %}
 
+<!-- Intro overlay -->
+        <div id="intro-overlay">
+            <h1>CATCLAIM</h1>
+            <p class="subtitle"> Place a cat on a facade and claim it. </p>
+
+            <div class="controls-grid">
+                <span class="key">W A S D</span>
+                <span class="desc">Move around</span>
+
+                <span class="key">Mouse</span>
+                <span class="desc">Look around</span>
+
+                <span class="key">Space</span>
+                <span class="desc">Fly up</span>
+
+                <span class="key">C</span>
+                <span class="desc">Fly down</span>
+
+                <span class="key">Esc</span>
+                <span class="desc">Lock / unlock mouse pointer</span>
+            </div>
+
+            <button class="start-btn" id="start-btn">START</button>
+            <p class="note">Press Esc at any time to unlock the pointer</p>
+        </div>
+
 <form id="insertImageForm" method="post" enctype="multipart/form-data">
     <p>
         <label for="uploadFile">Upload a cat:</label>

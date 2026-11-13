@@ -2,7 +2,17 @@
 {% extends "base.html" %}
 
 {% block scriptblock %}
-<script src="{{url_for('static',filename='js/script.js')}}"></script>
+<!-- Import Maps -->
+<script type="importmap">
+{
+    "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.128.0/examples/jsm/"
+    }
+}
+</script>
+<!-- link to main script-->
+<script type="module" src="{{url_for('static',filename='js/script.js')}}"></script>
 {% endblock %}
 
 {% block content %}

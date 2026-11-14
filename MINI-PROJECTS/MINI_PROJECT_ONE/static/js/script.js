@@ -38,25 +38,31 @@ scene.add(ground);
 ground.rotateX(-1.57)
 
 // Houses
-const houseGeometry = new THREE.BoxGeometry(100, 100, 100);
+const box = {
+    width: 100,
+    height: 100,
+    depth: 10,
+}
+const houseGeometry = new THREE.BoxGeometry(box.width, box.height, box.depth);
 const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we can add { map: the picture uploaded } 
 const cube = new THREE.Mesh(houseGeometry, houseMaterial);
 const cube1 = new THREE.Mesh(houseGeometry, houseMaterial);
 const cube2 = new THREE.Mesh(houseGeometry, houseMaterial);
+const cubePosition = ground.position.y + 50
 scene.add(cube, cube1, cube2);
 console.log(houseGeometry)
-cube.position.y = ground.position.y + 50
-cube1.position.y = ground.position.y + 50
-cube2.position.y = ground.position.y + 50
+cube.position.y = cubePosition
+cube1.position.y = cubePosition
+cube2.position.y = cubePosition
 cube1.position.x = 150
 cube2.position.x = 350
+cube.position.z = 0
+cube1.position.z = 0
+cube2.position.z = 0
 
 
-
-
-// const axesHelper = new THREE.AxesHelper(1)
-// scene.add(axesHelper)
-
+const axesHelper = new THREE.AxesHelper(1)
+scene.add(axesHelper)
 
 const raycaster = new THREE.Raycaster()
 
@@ -172,7 +178,7 @@ function placeCatInWorld(filename) {
             new THREE.PlaneGeometry(40, 40),
             new THREE.MeshBasicMaterial({ map: texture })
         );
-        catPlane.position.set(0, 20, 400);
+        catPlane.position.set(cube.position.x + box.depth, cube.position.y + box.depth, 30);
         scene.add(catPlane);
     });
 }
@@ -268,7 +274,6 @@ window.addEventListener("mousemove", function (event) {
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; //map to between -1,1
     //   console.log(mouse);
 })
-
 
 
 

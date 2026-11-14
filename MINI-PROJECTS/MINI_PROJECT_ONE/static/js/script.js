@@ -3,46 +3,55 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { Sky } from 'three/addons/objects/Sky.js';
 
- let mouse = {x:0, y:0}
+
+
+
+let mouse = { x: 0, y: 0 }
 
 // --- Core Setup ---
 const scene = new THREE.Scene();
 
+// texture loader:
+const textureLoader = new THREE.TextureLoader();
+
+
 // Skybox setup
 const sky = new Sky();
-sky.scale.setScalar( 450000 );
+sky.scale.setScalar(450000);
 scene.add(sky);
 const skyUniforms = sky.material.uniforms;
-skyUniforms[ 'turbidity' ].value = 1; // Increased for hazier, less saturated sky
-skyUniforms[ 'rayleigh' ].value = 1; // Reduced for less blue, more muted
-skyUniforms[ 'mieCoefficient' ].value = 0.5; // Low for subtle clouds
-skyUniforms[ 'mieDirectionalG' ].value = 1;
+skyUniforms['turbidity'].value = 1; // Increased for hazier, less saturated sky
+skyUniforms['rayleigh'].value = 1; // Reduced for less blue, more muted
+skyUniforms['mieCoefficient'].value = 0.5; // Low for subtle clouds
+skyUniforms['mieDirectionalG'].value = 1;
 const sun = new THREE.Vector3();
-const phi = THREE.MathUtils.degToRad( 20 ); // Sun position for light
-const theta = THREE.MathUtils.degToRad( 180 );
-sun.setFromSphericalCoords( 1, phi, theta );
-skyUniforms[ 'sunPosition' ].value.copy( sun );
+const phi = THREE.MathUtils.degToRad(20); // Sun position for light
+const theta = THREE.MathUtils.degToRad(180);
+sun.setFromSphericalCoords(1, phi, theta);
+skyUniforms['sunPosition'].value.copy(sun);
 
 // Ground
-const groundGeometry = new THREE.PlaneGeometry( 1000, 1000 );
-const groundMaterial = new THREE.MeshBasicMaterial( { color: "rgb(0, 79, 33)" } );
-const ground = new THREE.Mesh( groundGeometry, groundMaterial );
-scene.add( ground );
+const groundGeometry = new THREE.PlaneGeometry(1000, 1000);
+const groundMaterial = new THREE.MeshBasicMaterial({ color: "rgb(0, 79, 33)" });
+const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+scene.add(ground);
 ground.rotateX(-1.57)
 
 // Houses
-const houseGeometry = new THREE.BoxGeometry( 100, 100, 100 );
-const houseMaterial = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); // here we can add { map: the picture uploaded } 
-const cube = new THREE.Mesh( houseGeometry, houseMaterial );
-const cube1 = new THREE.Mesh( houseGeometry, houseMaterial );
-const cube2 = new THREE.Mesh( houseGeometry, houseMaterial );
-scene.add( cube, cube1, cube2 );
+const houseGeometry = new THREE.BoxGeometry(100, 100, 100);
+const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we can add { map: the picture uploaded } 
+const cube = new THREE.Mesh(houseGeometry, houseMaterial);
+const cube1 = new THREE.Mesh(houseGeometry, houseMaterial);
+const cube2 = new THREE.Mesh(houseGeometry, houseMaterial);
+scene.add(cube, cube1, cube2);
 console.log(houseGeometry)
 cube.position.y = ground.position.y + 50
 cube1.position.y = ground.position.y + 50
 cube2.position.y = ground.position.y + 50
 cube1.position.x = 150
 cube2.position.x = 350
+
+
 
 
 // const axesHelper = new THREE.AxesHelper(1)
@@ -62,7 +71,7 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild(renderer.domElement);
 
-const controls = new PointerLockControls( camera, renderer.domElement );
+const controls = new PointerLockControls(camera, renderer.domElement);
 // const controls = new OrbitControls(camera, renderer.domElement)
 
 // FPS movement variables
@@ -138,16 +147,43 @@ document.addEventListener('click', () => controls.lock()); // Locks mouse pointe
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft overall illumination
 scene.add(ambientLight);
 
-const light = new THREE.DirectionalLight( 0xFFFFFF, 0.5 ); // Main directional light source
+const light = new THREE.DirectionalLight(0xFFFFFF, 0.5); // Main directional light source
 scene.add(light);
+
+// dot to replace cursor
+const dot = new THREE.Mesh(
+    new THREE.SphereGeometry(0.04, 16, 16),
+    new THREE.MeshBasicMaterial({
+        color: "black",
+        name: 'material-1',
+        opacity: 0.4,
+        transparent: true,
+    })
+);
+dot.position.set(0, 0, -2); // 2 units ahead of the camera
+camera.add(dot);
+scene.add(camera);
+
+function placeCatInWorld(filename) {
+    const url = `/static/uploads/${filename}`;
+
+    textureLoader.load(url, (texture) => {
+        const catPlane = new THREE.Mesh(
+            new THREE.PlaneGeometry(40, 40),
+            new THREE.MeshBasicMaterial({ map: texture })
+        );
+        catPlane.position.set(0, 20, 400);
+        scene.add(catPlane);
+    });
+}
 
 let elapsedTime = 0;
 function animate(timer) { // Main animation loop
     requestAnimationFrame(animate);
-    
-    const delta = 0.001*(timer - elapsedTime) ; // Time since last frame
+
+    const delta = 0.001 * (timer - elapsedTime); // Time since last frame
     elapsedTime = timer;
-   
+
 
     // FPS movement in camera direction
     const moveVector = new THREE.Vector3(); // Accumulates desired movement direction
@@ -180,7 +216,7 @@ function animate(timer) { // Main animation loop
     if (moveVector.length() > 0) {
         moveVector.normalize().multiplyScalar(speed); // Normalize and scale by speed
     }
-    
+
     // Smooth movement with velocity interpolation
     velocity.lerp(moveVector, 0.1); // Gradually approach target velocity
     camera.position.add(velocity.clone().multiplyScalar(delta)); // Apply movement
@@ -190,25 +226,23 @@ function animate(timer) { // Main animation loop
     if (camera.position.y < targetY) {
         camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.1); // Smoothly adjust height
     }
-    
+
     // Prevent camera from going beyond terrain bounds
     camera.position.x = THREE.MathUtils.clamp(camera.position.x, -1000, 1000); // Clamp X position
     camera.position.z = THREE.MathUtils.clamp(camera.position.z, -1000, 1000); // Clamp Z position
 
-    raycaster.setFromCamera(mouse, camera);
-    
+    raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+
     renderer.render(scene, camera);
     const objectsToTest = [cube, cube1, cube2]
     const intersects = raycaster.intersectObjects(objectsToTest)
 
-     for(const object of objectsToTest)
-    {
-        object.material.color.set('#ff0000')
+    for (const object of objectsToTest) {
+        object.material.color.set('#0000ff')
     }
 
-    for(const intersect of intersects)
-    {
-        intersect.object.material.color.set('#0000ff')
+    for (const intersect of intersects) {
+        intersect.object.material.color.set('#ff0000')
     }
 }
 
@@ -224,16 +258,19 @@ window.addEventListener('resize', () => {
 
 // Handle click on start
 document.getElementById('start-btn').addEventListener('click', function () {
-                const overlay = document.getElementById('intro-overlay');
-                overlay.classList.add('hidden');
-                setTimeout(() => overlay.remove(), 700);
-            })
-
-window.addEventListener("mousemove", function(event) {
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1; //map to between -1,1
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; //map to between -1,1
-//   console.log(mouse);
+    const overlay = document.getElementById('intro-overlay');
+    overlay.classList.add('hidden');
+    setTimeout(() => overlay.remove(), 700);
 })
+
+window.addEventListener("mousemove", function (event) {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1; //map to between -1,1
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1; //map to between -1,1
+    //   console.log(mouse);
+})
+
+
+
 
 window.onload = function () {
     console.log("js is up and running");
@@ -252,9 +289,10 @@ window.onload = function () {
                 });
                 let resJSON = await res.json();
                 console.log(resJSON);
-                document.querySelector("#result-container").innerHTML =
-                    `<p>Thanks for submitting your cat!</p>
-           <img src="/static/uploads/${resJSON.filename}">`;
+                //         document.querySelector("#result-container").innerHTML =
+                //             `< p > Thanks for submitting your cat!</p >
+                // <img src="/static/uploads/${resJSON.filename}">`;
+                placeCatInWorld(resJSON.filename)
 
             } catch (err) {
                 console.log(err);

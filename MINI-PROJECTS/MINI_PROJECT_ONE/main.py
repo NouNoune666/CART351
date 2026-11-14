@@ -27,7 +27,7 @@ def thank_you_two():
     #key is the same as in the form :)
     uploadedfile = request.files['the_file']
     #save file to uploads folder
-    uploadedfile.save(os.path.join(app.config['UPLOAD_FOLDER'],uploadedfile.filename))
+    uploadedfile.save(os.path.join(app.config['UPLOAD_FOLDER'],uploadedfile.filename)) # writes the bytes to disk
     app.logger.info(uploadedfile.filename)
     return json.dumps({"filename": uploadedfile.filename})
 

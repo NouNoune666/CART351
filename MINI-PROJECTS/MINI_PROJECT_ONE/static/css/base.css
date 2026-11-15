@@ -119,4 +119,10 @@ body {
 
 footer {
     position: fixed;
+    /* margin-top: 47%; */
+        inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:end;
 }

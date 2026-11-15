@@ -3,9 +3,6 @@ import { PointerLockControls } from 'three/addons/controls/PointerLockControls.j
 // import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { Sky } from 'three/addons/objects/Sky.js';
 
-
-
-
 let mouse = { x: 0, y: 0 }
 let lastPoint = null;
 
@@ -14,7 +11,6 @@ const scene = new THREE.Scene();
 
 // texture loader:
 const textureLoader = new THREE.TextureLoader();
-
 
 // Skybox setup
 const sky = new Sky();
@@ -55,15 +51,15 @@ console.log(houseGeometry)
 cube.position.y = cubePosition
 // cube1.position.y = cubePosition
 // cube2.position.y = cubePosition
+cube.position.x = -150
 // cube1.position.x = 150
 // cube2.position.x = 350
-cube.position.z = 0
 // cube1.position.z = 0
 // cube2.position.z = 0
 
-
-const axesHelper = new THREE.AxesHelper(1)
-scene.add(axesHelper)
+// // activate to see axes
+// const axesHelper = new THREE.AxesHelper(100)
+// scene.add(axesHelper)
 
 const raycaster = new THREE.Raycaster()
 
@@ -248,6 +244,13 @@ function animate(timer) { // Main animation loop
 
     for (const intersect of intersects) {
         intersect.object.material.color.set('#ff0000')
+        // when ray intersects AND clicked, form appears
+        window.addEventListener('click', () => {
+            const overlayForm = document.getElementById('insertImageForm');
+            overlayForm.classList.add('showing');
+            // exits pointer lock controls so user can click
+            controls.unlock()
+        });
     }
 }
 
@@ -290,11 +293,13 @@ window.addEventListener("mousemove", function (event) {
 
 window.onload = function () {
     console.log("js is up and running");
-    document
-        .querySelector("#insertImageForm")
-        .addEventListener("submit", async function (event) {
+    document.querySelector("#insertImageForm").addEventListener("submit", async function (event) {
             event.preventDefault();
             console.log("cat submitted")
+
+            // make the form disappear
+            const overlayForm = document.getElementById('insertImageForm');
+            overlayForm.classList.remove('showing');
 
             let form = document.querySelector("#insertImageForm")
             let data = new FormData(form)

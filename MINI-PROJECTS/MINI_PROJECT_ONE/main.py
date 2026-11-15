@@ -34,10 +34,10 @@ def thank_you_two():
     # we don't need this if we are not going to a new page
     # return render_template("thankyou_form_rev.html", 
     #                        imgPath = uploadedfile.filename)
-                        
 
 @app.route('/pastUploads')
 def pastUploads():
 # this will handle past uploads and put them back in the 3d world
+    return
 
 app.run(debug = True)

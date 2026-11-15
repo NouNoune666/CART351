@@ -27,12 +27,30 @@ const theta = THREE.MathUtils.degToRad(180);
 sun.setFromSphericalCoords(1, phi, theta);
 skyUniforms['sunPosition'].value.copy(sun);
 
+// --- Lighting ---
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft overall illumination
+scene.add(ambientLight);
+
+const light = new THREE.DirectionalLight(0xFFFFFF, 5); // Main directional light source
+light.position.set(-150, 100, -100);
+light.target.position.set(-300, 0, 0);
+scene.add(light);
+scene.add(light.target);
+
+light.castShadow = true
+light.shadow.mapSize.width = 1024
+light.shadow.mapSize.height = 1024
+light.shadow.radius = 10
+
+// const helper = new THREE.DirectionalLightHelper(light);
+// scene.add(helper);
+
 // Ground
 const groundGeometry = new THREE.PlaneGeometry(1000, 1000);
 const groundMaterial = new THREE.MeshBasicMaterial({ color: "rgb(0, 79, 33)" });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 scene.add(ground);
-ground.rotateX(-1.57)
+ground.rotateX(- Math.PI * 0.5)
 
 // Houses
 const box = {
@@ -61,6 +79,10 @@ cube.position.x = -150
 // const axesHelper = new THREE.AxesHelper(100)
 // scene.add(axesHelper)
 
+cube.receiveShadow = true
+cube.castShadow = true
+ground.receiveShadow = true
+
 const raycaster = new THREE.Raycaster()
 
 
@@ -71,7 +93,7 @@ camera.lookAt(0, 0, 0);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 document.body.appendChild(renderer.domElement);
 
 const controls = new PointerLockControls(camera, renderer.domElement);
@@ -145,13 +167,6 @@ function onKeyUp(event) { // Resets movement flags on key release
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
 document.addEventListener('click', () => controls.lock()); // Locks mouse pointer for FPS look
-
-// --- Lighting ---
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.3); // Soft overall illumination
-scene.add(ambientLight);
-
-const light = new THREE.DirectionalLight(0xFFFFFF, 0.5); // Main directional light source
-scene.add(light);
 
 // dot to replace cursor
 const dot = new THREE.Mesh(

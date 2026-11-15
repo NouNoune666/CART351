@@ -36,5 +36,8 @@ def thank_you_two():
     #                        imgPath = uploadedfile.filename)
                         
 
+@app.route('/pastUploads')
+def pastUploads():
+# this will handle past uploads and put them back in the 3d world
 
 app.run(debug = True)

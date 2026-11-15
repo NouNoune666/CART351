@@ -7,6 +7,7 @@ import { Sky } from 'three/addons/objects/Sky.js';
 
 
 let mouse = { x: 0, y: 0 }
+let lastPoint = null;
 
 // --- Core Setup ---
 const scene = new THREE.Scene();
@@ -44,21 +45,21 @@ const box = {
     depth: 10,
 }
 const houseGeometry = new THREE.BoxGeometry(box.width, box.height, box.depth);
-const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we can add { map: the picture uploaded } 
+const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we could add { map: the picture uploaded } 
 const cube = new THREE.Mesh(houseGeometry, houseMaterial);
-const cube1 = new THREE.Mesh(houseGeometry, houseMaterial);
-const cube2 = new THREE.Mesh(houseGeometry, houseMaterial);
+// const cube1 = new THREE.Mesh(houseGeometry, houseMaterial);
+// const cube2 = new THREE.Mesh(houseGeometry, houseMaterial);
 const cubePosition = ground.position.y + 50
-scene.add(cube, cube1, cube2);
+scene.add(cube);
 console.log(houseGeometry)
 cube.position.y = cubePosition
-cube1.position.y = cubePosition
-cube2.position.y = cubePosition
-cube1.position.x = 150
-cube2.position.x = 350
+// cube1.position.y = cubePosition
+// cube2.position.y = cubePosition
+// cube1.position.x = 150
+// cube2.position.x = 350
 cube.position.z = 0
-cube1.position.z = 0
-cube2.position.z = 0
+// cube1.position.z = 0
+// cube2.position.z = 0
 
 
 const axesHelper = new THREE.AxesHelper(1)
@@ -170,18 +171,6 @@ dot.position.set(0, 0, -2); // 2 units ahead of the camera
 camera.add(dot);
 scene.add(camera);
 
-function placeCatInWorld(filename) {
-    const url = `/static/uploads/${filename}`;
-
-    textureLoader.load(url, (texture) => {
-        const catPlane = new THREE.Mesh(
-            new THREE.PlaneGeometry(40, 40),
-            new THREE.MeshBasicMaterial({ map: texture })
-        );
-        catPlane.position.set(cube.position.x + box.depth, cube.position.y + box.depth, 30);
-        scene.add(catPlane);
-    });
-}
 
 let elapsedTime = 0;
 function animate(timer) { // Main animation loop
@@ -240,8 +229,18 @@ function animate(timer) { // Main animation loop
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 
     renderer.render(scene, camera);
-    const objectsToTest = [cube, cube1, cube2]
+    const objectsToTest = [cube]
     const intersects = raycaster.intersectObjects(objectsToTest)
+
+    // the 3d point on the cube!
+    // console.log(intersects[0].point)
+    if (intersects.length > 0) { // basically if intersects is true
+        lastPoint = intersects[0].point
+        console.log(lastPoint.x)
+    } else {
+        lastPoint = null;
+    }
+
 
     for (const object of objectsToTest) {
         object.material.color.set('#0000ff')
@@ -252,8 +251,20 @@ function animate(timer) { // Main animation loop
     }
 }
 
-
 animate(0);
+
+function placeCatInWorld(filename) {
+    const url = `/static/uploads/${filename}`;
+
+    textureLoader.load(url, (texture) => {
+        const catPlane = new THREE.Mesh(
+            new THREE.BoxGeometry(20, 20, 11),
+            new THREE.MeshBasicMaterial({ map: texture })
+        );
+        catPlane.position.set(lastPoint.x, lastPoint.y, lastPoint.z - 5);
+        scene.add(catPlane);
+    });
+}
 
 // Handle window resize
 window.addEventListener('resize', () => {
@@ -294,9 +305,8 @@ window.onload = function () {
                 });
                 let resJSON = await res.json();
                 console.log(resJSON);
-                //         document.querySelector("#result-container").innerHTML =
-                //             `< p > Thanks for submitting your cat!</p >
-                // <img src="/static/uploads/${resJSON.filename}">`;
+                document.querySelector("#result-container").innerHTML =
+                    ` Thanks for submitting your cat!`;
                 placeCatInWorld(resJSON.filename)
 
             } catch (err) {

@@ -58,7 +58,7 @@ light.shadow.radius = 10
 // scene.add(helper);
 
 // Ground
-const groundGeometry = new THREE.PlaneGeometry(1000, 1000);
+const groundGeometry = new THREE.PlaneGeometry(10000, 10000);
 const groundMaterial = new THREE.MeshBasicMaterial({ color: "rgb(0, 79, 33)" });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 scene.add(ground);
@@ -70,22 +70,33 @@ const box = {
     height: 100,
     depth: 10,
 }
-const houseGeometry = new THREE.BoxGeometry(box.width, box.height, box.depth);
-const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we could add { map: the picture uploaded } 
-const cube = new THREE.Mesh(houseGeometry, houseMaterial);
-const cubePosition = ground.position.y + 50
-scene.add(cube);
-console.log(houseGeometry)
-cube.position.y = cubePosition
-cube.position.x = -150
+const block_texture = `/static/assets/block_description.png`;
+textureLoader.load(block_texture, (texture) => {
+    const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(box.width, box.height, box.depth), 
+        new THREE.MeshBasicMaterial({ map: texture })
+    );
+    const cubePosition = ground.position.y + 50
+    scene.add(cube);
+    cube.position.y = cubePosition
+    cube.position.x = -150
+
+    cube.receiveShadow = true
+    cube.castShadow = true
+})
+const cube = new THREE.Mesh(
+        new THREE.BoxGeometry(box.width, box.height, box.depth), 
+        new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 255)" })
+    );
+    const cubePosition = ground.position.y + 50
+    scene.add(cube);
+    cube.position.y = cubePosition
+    cube.position.x = -150
 
 
 // // activate to see axes
 // const axesHelper = new THREE.AxesHelper(100)
 // scene.add(axesHelper)
-
-cube.receiveShadow = true
-cube.castShadow = true
 ground.receiveShadow = true
 
 const raycaster = new THREE.Raycaster()
@@ -110,7 +121,6 @@ let moveBackward = false;
 let moveLeft = false;
 let moveRight = false;
 let moveUp = false; // Flag for upward movement
-let moveDown = false; // Flag for downward movement
 const speed = 500; // Controls speed of movement
 const velocity = new THREE.Vector3(); // For smooth movement
 
@@ -135,9 +145,7 @@ function onKeyDown(event) { // Sets movement flags on key press
             break;
         case 'Space': // Spacebar for upward movement
             moveUp = true;
-            break;
-        case 'KeyC': // C key for downward movement
-            moveDown = true;
+            setTimeout(() => moveUp = false, 100) // to avoid player breaking out of bounds!
             break;
     }
 }
@@ -162,9 +170,6 @@ function onKeyUp(event) { // Resets movement flags on key release
             break;
         case 'Space': // Reset upward movement
             moveUp = false;
-            break;
-        case 'KeyC': // Reset downward movement
-            moveDown = false;
             break;
     }
 }
@@ -221,9 +226,6 @@ function animate(timer) { // Main animation loop
     if (moveUp) {
         moveVector.add(camera.up); // Move upward along camera's up vector
     }
-    if (moveDown) {
-        moveVector.add(camera.up.clone().negate()); // Move downward
-    }
     if (moveVector.length() > 0) {
         moveVector.normalize().multiplyScalar(speed); // Normalize and scale by speed
     }
@@ -237,10 +239,13 @@ function animate(timer) { // Main animation loop
     if (camera.position.y < targetY) {
         camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.1); // Smoothly adjust height
     }
+    else if (camera.position.y < targetY + 30) { // Collision with invisible aerian boundary
+        camera.position.y = THREE.MathUtils.lerp(camera.position.y, targetY, 0.1); // Smoothly adjust height
+    }
 
     // Prevent camera from going beyond terrain bounds
-    camera.position.x = THREE.MathUtils.clamp(camera.position.x, -1000, 1000); // Clamp X position
-    camera.position.z = THREE.MathUtils.clamp(camera.position.z, -1000, 1000); // Clamp Z position
+    camera.position.x = THREE.MathUtils.clamp(camera.position.x, -800, 800); // Clamp X position
+    camera.position.z = THREE.MathUtils.clamp(camera.position.z, -800, 800); // Clamp Z position
 
     raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
 

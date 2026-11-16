@@ -1,5 +1,5 @@
 # CATCLAIM
-by Philippe Beauchemin and Nou Noune (Amélie Barrette)
+*by Philippe Beauchemin and Nou Noune (Amélie Barrette)*
 
 Place a cat on the façade and admire the other cats.
 

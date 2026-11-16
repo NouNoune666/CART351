@@ -16,7 +16,6 @@ def index():
 
 @app.route("/catForm",methods = ['POST'])
 def catForm():
-
     #key is the same as in the form :)
     uploadedfile = request.files['the_file']
     #save file to uploads folder

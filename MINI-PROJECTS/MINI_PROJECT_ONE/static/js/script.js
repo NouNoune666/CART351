@@ -13,16 +13,6 @@ const scene = new THREE.Scene();
 // texture loader:
 const textureLoader = new THREE.TextureLoader();
 
-// // font loader:
-// const fontLoader = new FontLoader();
-// const font = await fontLoader.loadAsync( 'static/fonts/comic_relief_regular.json' );
-// const text = new TextGeometry( 'Hello three.js!', {
-// 	font: font,
-// 	size: 80,
-// 	depth: 5,
-// 	curveSegments: 12
-// } );
-// text.position = (0, 0, 0)
 
 // Skybox setup
 const sky = new Sky();
@@ -73,7 +63,7 @@ const box = {
 const block_texture = `/static/assets/block_description.png`;
 textureLoader.load(block_texture, (texture) => {
     const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(box.width, box.height, box.depth), 
+        new THREE.BoxGeometry(box.width, box.height, box.depth),
         new THREE.MeshBasicMaterial({ map: texture })
     );
     const cubePosition = ground.position.y + 50
@@ -85,13 +75,13 @@ textureLoader.load(block_texture, (texture) => {
     cube.castShadow = true
 })
 const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(box.width, box.height, box.depth), 
-        new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 255)" })
-    );
-    const cubePosition = ground.position.y + 50
-    scene.add(cube);
-    cube.position.y = cubePosition
-    cube.position.x = -150
+    new THREE.BoxGeometry(box.width, box.height, box.depth),
+    new THREE.MeshBasicMaterial({ color: "rgb(0, 0, 255)" })
+);
+const cubePosition = ground.position.y + 50
+scene.add(cube);
+cube.position.y = cubePosition
+cube.position.x = -150
 
 
 // // activate to see axes
@@ -284,7 +274,7 @@ function makeFormAppear() {
     controls.unlock()
 }
 
-function makeFormDisappear(){
+function makeFormDisappear() {
     const overlayForm = document.getElementById('insertImageForm');
     overlayForm.classList.remove('showing');
 }
@@ -311,13 +301,13 @@ function placeOtherCats(filename, i) {
             new THREE.MeshBasicMaterial({ map: texture })
         );
 
-        if (i<=5) {
+        if (i <= 5) {
             cat.position.set(i * 75, 25, 100);
         }
-        else if (i<=10) {
+        else if (i <= 10) {
             cat.position.set(i * 75 - 450, 25, 200);
         }
-        else if (i<=15) {
+        else if (i <= 15) {
             cat.position.set(i * 75 - 450, 25, 0);
         }
         scene.add(cat);
@@ -376,9 +366,8 @@ window.onload = function () {
         let data = new FormData(form)
 
 
-
         try {
-            let res = await fetch("/thank_form_two", {
+            let res = await fetch("/catForm", {
                 method: "POST",
                 body: data,
             });

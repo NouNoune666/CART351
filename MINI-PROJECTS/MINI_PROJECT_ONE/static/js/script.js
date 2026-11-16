@@ -61,19 +61,12 @@ const box = {
 const houseGeometry = new THREE.BoxGeometry(box.width, box.height, box.depth);
 const houseMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 }); // here we could add { map: the picture uploaded } 
 const cube = new THREE.Mesh(houseGeometry, houseMaterial);
-// const cube1 = new THREE.Mesh(houseGeometry, houseMaterial);
-// const cube2 = new THREE.Mesh(houseGeometry, houseMaterial);
 const cubePosition = ground.position.y + 50
 scene.add(cube);
 console.log(houseGeometry)
 cube.position.y = cubePosition
-// cube1.position.y = cubePosition
-// cube2.position.y = cubePosition
 cube.position.x = -150
-// cube1.position.x = 150
-// cube2.position.x = 350
-// cube1.position.z = 0
-// cube2.position.z = 0
+
 
 // // activate to see axes
 // const axesHelper = new THREE.AxesHelper(100)
@@ -166,7 +159,8 @@ function onKeyUp(event) { // Resets movement flags on key release
 
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
-document.addEventListener('click', () => controls.lock()); // Locks mouse pointer for FPS look
+document.addEventListener('click', () => controls.lock());
+// Locks mouse pointer for FPS look
 
 // dot to replace cursor
 const dot = new THREE.Mesh(
@@ -247,7 +241,7 @@ function animate(timer) { // Main animation loop
     // console.log(intersects[0].point)
     if (intersects.length > 0) { // basically if intersects is true
         lastPoint = intersects[0].point
-        console.log(lastPoint.x)
+        console.log("intersecting box")
     } else {
         lastPoint = null;
     }
@@ -284,6 +278,34 @@ function placeCatInWorld(filename) {
     });
 }
 
+function placeOtherCats(filename, i) {
+    const url = `/static/uploads/${filename}`;
+
+    textureLoader.load(url, (texture) => {
+        const cat = new THREE.Mesh(
+            new THREE.BoxGeometry(20, 20, 20),
+            new THREE.MeshBasicMaterial({ map: texture })
+        );
+
+        cat.position.set(i * 30, 10, 100);
+        scene.add(cat);
+    });
+}
+
+async function displayPastCats() {
+    try {
+        let res = await fetch("/pastUploads");
+        let files = await res.json()
+        console.log(files)
+        files.forEach((filename, i) => {
+            placeOtherCats(filename, i)
+        });
+
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 // Handle window resize
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight; // Update camera aspect ratio
@@ -305,34 +327,41 @@ window.addEventListener("mousemove", function (event) {
 })
 
 
-
 window.onload = function () {
     console.log("js is up and running");
+    displayPastCats();
+
+
     document.querySelector("#insertImageForm").addEventListener("submit", async function (event) {
-            event.preventDefault();
-            console.log("cat submitted")
+        event.preventDefault();
+        console.log("cat submitted")
 
-            // make the form disappear
-            const overlayForm = document.getElementById('insertImageForm');
-            overlayForm.classList.remove('showing');
+        // make the form disappear
+        const overlayForm = document.getElementById('insertImageForm');
+        overlayForm.classList.remove('showing');
 
-            let form = document.querySelector("#insertImageForm")
-            let data = new FormData(form)
-            try {
-                let res = await fetch("/thank_form_two", {
-                    method: "POST",
-                    body: data,
-                });
-                let resJSON = await res.json();
-                console.log(resJSON);
-                document.querySelector("#result-container").innerHTML =
-                    ` Thanks for submitting your cat!`;
-                placeCatInWorld(resJSON.filename)
+        let form = document.querySelector("#insertImageForm")
+        let data = new FormData(form)
 
-            } catch (err) {
-                console.log(err);
-            }
-        })
+
+
+        try {
+            let res = await fetch("/thank_form_two", {
+                method: "POST",
+                body: data,
+            });
+            let resJSON = await res.json();
+            console.log(resJSON);
+            document.querySelector("#result-container").innerHTML =
+                ` Thanks for submitting your cat!`;
+            placeCatInWorld(resJSON.filename)
+
+        } catch (err) {
+            console.log(err);
+        }
+
+
+    })
 
 
 };

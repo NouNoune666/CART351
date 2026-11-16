@@ -31,13 +31,12 @@ def thank_you_two():
     app.logger.info(uploadedfile.filename)
     return json.dumps({"filename": uploadedfile.filename})
 
-    # we don't need this if we are not going to a new page
-    # return render_template("thankyou_form_rev.html", 
-    #                        imgPath = uploadedfile.filename)
 
 @app.route('/pastUploads')
 def pastUploads():
-# this will handle past uploads and put them back in the 3d world
-    return
+# this will handle past uploaded images
+    img_list = os.listdir(app.config['UPLOAD_FOLDER'])
+    app.logger.info(img_list)
+    return img_list
 
 app.run(debug = True)

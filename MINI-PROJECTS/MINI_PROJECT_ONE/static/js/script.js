@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { PointerLockControls } from 'three/addons/controls/PointerLockControls.js';
-// import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
 import { Sky } from 'three/addons/objects/Sky.js';
+// import { TextGeometry } from 'three/addons/geometries/TextGeometry.js'; // not working
+// import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
 let mouse = { x: 0, y: 0 }
 let lastPoint = null;
@@ -11,6 +12,17 @@ const scene = new THREE.Scene();
 
 // texture loader:
 const textureLoader = new THREE.TextureLoader();
+
+// // font loader:
+// const fontLoader = new FontLoader();
+// const font = await fontLoader.loadAsync( 'static/fonts/comic_relief_regular.json' );
+// const text = new TextGeometry( 'Hello three.js!', {
+// 	font: font,
+// 	size: 80,
+// 	depth: 5,
+// 	curveSegments: 12
+// } );
+// text.position = (0, 0, 0)
 
 // Skybox setup
 const sky = new Sky();
@@ -159,7 +171,6 @@ function onKeyUp(event) { // Resets movement flags on key release
 
 document.addEventListener('keydown', onKeyDown);
 document.addEventListener('keyup', onKeyUp);
-document.addEventListener('click', () => controls.lock());
 // Locks mouse pointer for FPS look
 
 // dot to replace cursor
@@ -242,8 +253,11 @@ function animate(timer) { // Main animation loop
     if (intersects.length > 0) { // basically if intersects is true
         lastPoint = intersects[0].point
         console.log("intersecting box")
+        window.addEventListener('click', makeFormAppear);
     } else {
         lastPoint = null;
+        window.removeEventListener('click', makeFormAppear);
+        window.addEventListener('click', makeFormDisappear)
     }
 
 
@@ -253,17 +267,22 @@ function animate(timer) { // Main animation loop
 
     for (const intersect of intersects) {
         intersect.object.material.color.set('#ff0000')
-        // when ray intersects AND clicked, form appears
-        window.addEventListener('click', () => {
-            const overlayForm = document.getElementById('insertImageForm');
-            overlayForm.classList.add('showing');
-            // exits pointer lock controls so user can click
-            controls.unlock()
-        });
     }
 }
 
 animate(0);
+
+function makeFormAppear() {
+    const overlayForm = document.getElementById('insertImageForm');
+    overlayForm.classList.add('showing');
+    // exits pointer lock controls so user can click
+    controls.unlock()
+}
+
+function makeFormDisappear(){
+    const overlayForm = document.getElementById('insertImageForm');
+    overlayForm.classList.remove('showing');
+}
 
 function placeCatInWorld(filename) {
     const url = `/static/uploads/${filename}`;
@@ -283,11 +302,19 @@ function placeOtherCats(filename, i) {
 
     textureLoader.load(url, (texture) => {
         const cat = new THREE.Mesh(
-            new THREE.BoxGeometry(20, 20, 20),
+            new THREE.BoxGeometry(50, 50, 50),
             new THREE.MeshBasicMaterial({ map: texture })
         );
 
-        cat.position.set(i * 30, 10, 100);
+        if (i<=5) {
+            cat.position.set(i * 75, 25, 100);
+        }
+        else if (i<=10) {
+            cat.position.set(i * 75 - 450, 25, 200);
+        }
+        else if (i<=15) {
+            cat.position.set(i * 75 - 450, 25, 0);
+        }
         scene.add(cat);
     });
 }
@@ -314,10 +341,11 @@ window.addEventListener('resize', () => {
 });
 
 // Handle click on start
-document.getElementById('start-btn').addEventListener('click', function () {
+document.getElementById('start-btn').addEventListener('click', () => {
     const overlay = document.getElementById('intro-overlay');
     overlay.classList.add('hidden');
     setTimeout(() => overlay.remove(), 700);
+    controls.lock();
 })
 
 window.addEventListener("mousemove", function (event) {
@@ -336,9 +364,8 @@ window.onload = function () {
         event.preventDefault();
         console.log("cat submitted")
 
-        // make the form disappear
-        const overlayForm = document.getElementById('insertImageForm');
-        overlayForm.classList.remove('showing');
+        makeFormDisappear();
+        controls.lock();
 
         let form = document.querySelector("#insertImageForm")
         let data = new FormData(form)
@@ -360,7 +387,7 @@ window.onload = function () {
             console.log(err);
         }
 
-
+        displayPastCats();
     })
 
 

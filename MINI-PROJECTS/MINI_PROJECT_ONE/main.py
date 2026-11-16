@@ -1,7 +1,6 @@
 import os
 import json
-from flask import Flask, flash, request, redirect, url_for, render_template
-from werkzeug.utils import secure_filename
+from flask import Flask, request, redirect, url_for, render_template
 
 app = Flask(__name__)
 
@@ -23,9 +22,9 @@ def catForm():
     app.logger.info(uploadedfile.filename)
     return json.dumps({"filename": uploadedfile.filename})
 
+# Handle past uploaded images
 @app.route('/pastUploads')
 def pastUploads():
-# this will handle past uploaded images
     img_list = os.listdir(app.config['UPLOAD_FOLDER'])
     app.logger.info(img_list)
     return img_list

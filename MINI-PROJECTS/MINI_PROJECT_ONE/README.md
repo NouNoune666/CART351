@@ -1,7 +1,7 @@
 # CATCLAIM
-*by Philippe Beauchemin and Nou Noune (Amélie Barrette)*
+by Philippe Beauchemin and Nou Noune (Amélie Barrette), 2026
 
-Place a cat on the façade and admire the other cats.
+An interactive web experience that combines Three.js with an implementation of POST requests to retrieve and display cat images from users. On the experience's homepage, "Place a cat on the façade and admire the other cats" instructs the user to playfully add to the database.
 
 ![Homepage](documentation/homepage.png)
 ![Screengrab](documentation/screengrab.png)

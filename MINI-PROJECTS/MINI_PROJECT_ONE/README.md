@@ -3,8 +3,8 @@ by Philippe Beauchemin and Nou Noune (Amélie Barrette)
 
 Place a cat on the façade and admire the other cats.
 
-![Homepage](homepage.png)
-![Screengrab](screengrab.png)
+![Homepage](documentation/homepage.png)
+![Screengrab](documentation/screengrab.png)
 
 Prototype:
 ![Blue Block](documentation/mini-project-cats.png)

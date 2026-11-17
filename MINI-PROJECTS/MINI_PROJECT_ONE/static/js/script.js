@@ -301,6 +301,7 @@ function placeOtherCats(filename, i) {
             new THREE.MeshBasicMaterial({ map: texture })
         );
 
+
         if (i <= 5) {
             cat.position.set(i * 75, 25, 100);
         }
